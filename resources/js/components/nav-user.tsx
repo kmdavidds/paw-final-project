@@ -8,29 +8,34 @@ import { usePage } from '@inertiajs/react';
 import { ChevronsUpDown } from 'lucide-react';
 
 export function NavUser() {
-    const { auth } = usePage<SharedData>().props;
-    const { state } = useSidebar();
-    const isMobile = useIsMobile();
+  const { auth } = usePage<SharedData>().props;
+  const { state } = useSidebar();
+  const isMobile = useIsMobile();
 
-    return (
-        <SidebarMenu>
-            <SidebarMenuItem>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <SidebarMenuButton size="lg" className="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group">
-                            <UserInfo user={auth.user} />
-                            <ChevronsUpDown className="ml-auto size-4" />
-                        </SidebarMenuButton>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                        className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-                        align="end"
-                        side={isMobile ? 'bottom' : state === 'collapsed' ? 'left' : 'bottom'}
-                    >
-                        <UserMenuContent user={auth.user} />
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </SidebarMenuItem>
-        </SidebarMenu>
-    );
+  return (
+    <div className="fixed bottom-8 right-8 bg-white shadow-lg rounded-2xl border border-gray-200">
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                size="lg"
+                className="flex items-center gap-4 px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 hover:text-white"
+                >
+                <UserInfo user={auth.user} />
+                <ChevronsUpDown className="ml-auto w-5 h-5" />
+                </SidebarMenuButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-auto min-w-56 mt-2 rounded-lg bg-white shadow-lg border border-gray-200"
+              align="end"
+              side={isMobile ? 'bottom' : state === 'collapsed' ? 'left' : 'bottom'}
+            >
+              <UserMenuContent user={auth.user} />
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </div>
+  );
 }

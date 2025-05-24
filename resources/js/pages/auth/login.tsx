@@ -1,14 +1,12 @@
-import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
+import { Link, useForm } from '@inertiajs/react';
+import { LoaderCircle, PenTool } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
 
 type LoginForm = {
     email: string;
@@ -36,75 +34,124 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     };
 
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
-            <Head title="Log in" />
-
-            <form className="flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
-                        />
-                        <InputError message={errors.email} />
-                    </div>
-
-                    <div className="grid gap-2">
-                        <div className="flex items-center">
-                            <Label htmlFor="password">Password</Label>
-                            {canResetPassword && (
-                                <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
-                                    Forgot password?
-                                </TextLink>
-                            )}
+        <div className="flex min-h-screen flex-col bg-gradient-to-br from-orange-50 to-amber-50">
+            {/* Header */}
+            <header className="border-b border-orange-200 bg-white/80 backdrop-blur-md">
+                <div className="container mx-auto px-4 py-4">
+                    {/* Logo */}
+                    <Link href={route('home')} className="flex items-center space-x-2">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-orange-500 to-amber-500">
+                            <PenTool className="h-5 w-5 text-white" />
                         </div>
-                        <Input
-                            id="password"
-                            type="password"
-                            required
-                            tabIndex={2}
-                            autoComplete="current-password"
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Password"
-                        />
-                        <InputError message={errors.password} />
+                        <span className="text-2xl font-bold text-orange-600">bloggies</span>
+                    </Link>
+                </div>
+            </header>
+
+            {/* Main Content */}
+            <main className="flex flex-1 items-center justify-center px-4 py-12">
+                <div className="w-full max-w-md">
+                    <div className="overflow-hidden rounded-lg border-orange-200 shadow-xl">
+                        <div className="bg-white pt-4 text-center">
+                            <h1 className="my-4 text-2xl font-bold text-gray-900">Welcome Back</h1>
+                            <p className="text-gray-600">Login to your bloggies account to continue</p>
+                        </div>
+                        <div className="bg-white p-6">
+                            <form className="space-y-6" onSubmit={submit}>
+                                {status && <div className="rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-600">{status}</div>}
+
+                                {/* Email Field */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="email">Email Address</Label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        required
+                                        autoFocus
+                                        tabIndex={1}
+                                        autoComplete="email"
+                                        value={data.email}
+                                        onChange={(e) => setData('email', e.target.value)}
+                                        placeholder="Enter your email"
+                                        className="border-orange-200 focus:border-orange-500 focus:ring-orange-500"
+                                    />
+                                    <InputError message={errors.email} />
+                                </div>
+
+                                {/* Password Field */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="password">Password</Label>
+                                    <Input
+                                        id="password"
+                                        type="password"
+                                        required
+                                        tabIndex={2}
+                                        autoComplete="current-password"
+                                        value={data.password}
+                                        onChange={(e) => setData('password', e.target.value)}
+                                        placeholder="Enter your password"
+                                        className="border-orange-200 focus:border-orange-500 focus:ring-orange-500"
+                                    />
+                                    <InputError message={errors.password} />
+                                </div>
+
+                                {/* Remember Me and Forgot Password */}
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id="remember"
+                                            name="remember"
+                                            checked={data.remember}
+                                            onClick={() => setData('remember', !data.remember)}
+                                            tabIndex={3}
+                                            className="border-orange-300 data-[state=checked]:border-orange-500 data-[state=checked]:bg-orange-500"
+                                        />
+                                        <Label htmlFor="remember" className="cursor-pointer text-sm text-gray-600">
+                                            Remember me
+                                        </Label>
+                                    </div>
+                                    {canResetPassword && (
+                                        <a
+                                            href={route('password.request')}
+                                            className="text-sm text-orange-600 hover:text-orange-700 hover:underline"
+                                            tabIndex={5}
+                                        >
+                                            Forgot password?
+                                        </a>
+                                    )}
+                                </div>
+
+                                {/* Login Button */}
+                                <Button
+                                    type="submit"
+                                    className="w-full bg-gradient-to-r from-orange-500 to-amber-500 py-2.5 text-white hover:from-orange-600 hover:to-amber-600"
+                                    tabIndex={4}
+                                    disabled={processing}
+                                >
+                                    {processing ? (
+                                        <>
+                                            <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                                            Logging in...
+                                        </>
+                                    ) : (
+                                        'Login'
+                                    )}
+                                </Button>
+                            </form>
+                        </div>
                     </div>
 
-                    <div className="flex items-center space-x-3">
-                        <Checkbox
-                            id="remember"
-                            name="remember"
-                            checked={data.remember}
-                            onClick={() => setData('remember', !data.remember)}
-                            tabIndex={3}
-                        />
-                        <Label htmlFor="remember">Remember me</Label>
+                    {/* Register Link */}
+                    <div className="mt-6 text-center">
+                        <p className="text-gray-600">
+                            {"Don't have an account? "}
+                            <a href={route('register')} className="font-medium text-orange-600 hover:text-orange-700 hover:underline" tabIndex={5}>
+                                Create one here
+                            </a>
+                        </p>
                     </div>
-
-                    <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Log in
-                    </Button>
                 </div>
-
-                <div className="text-muted-foreground text-center text-sm">
-                    Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
-                        Sign up
-                    </TextLink>
-                </div>
-            </form>
-
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
-        </AuthLayout>
+            </main>
+        </div>
     );
 }

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
-import { PanelLeftIcon } from "lucide-react"
+import { PanelLeftIcon, PanelRightOpen } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -52,7 +52,7 @@ function useSidebar() {
 }
 
 function SidebarProvider({
-  defaultOpen = true,
+  defaultOpen = false,
   open: openProp,
   onOpenChange: setOpenProp,
   className,
@@ -150,7 +150,7 @@ function SidebarProvider({
 }
 
 function Sidebar({
-  side = "left",
+  side = "right",
   variant = "sidebar",
   collapsible = "offcanvas",
   className,
@@ -268,7 +268,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <PanelRightOpen />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

@@ -72,7 +72,7 @@ export default function Dashboard({ blogs }: DashboardProps) {
                                                 </div>
                                             </div>
                                             <div className="ml-4 flex space-x-2">
-                                                <Link href={route('blogs.edit', blog)}>
+                                                <Link href={`/blogs/${blog.id}/edit`}>
                                                     <Button
                                                         size="sm"
                                                         variant="outline"
