@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 
 export default function HeroSection() {
     return (
-        <section id="home" className="px-4 py-20 h-[90vh] flex items-center">
+        <section id="home" className="flex h-[90vh] items-center px-4 py-20">
             <div className="container mx-auto text-center">
                 <Badge className="mb-6 bg-orange-100 text-orange-700 hover:bg-orange-200">✨ Welcome to the future of blogging</Badge>
                 <h1 className="mb-6 text-5xl font-bold text-gray-900 md:text-7xl">

@@ -126,7 +126,6 @@ export default function EditBlogPage({ blog }: Props) {
                                     View Blog
                                 </Button>
                             </Link>
-                
                         </div>
                         <Button
                             type="submit"
