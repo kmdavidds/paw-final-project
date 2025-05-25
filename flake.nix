@@ -21,6 +21,7 @@
           pkgs.nodejs
           pkgs.php
           pkgs.php84Packages.composer
+          pkgs.k6
         ];
 
       };
